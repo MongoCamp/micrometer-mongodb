@@ -1,3 +1,0 @@
-# Collection
-
-* [Aggregation](aggregation.md)

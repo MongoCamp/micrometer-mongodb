@@ -1,27 +1,15 @@
 # Getting Started
 
-A library for easy usage of the mongo-scala-driver.
+A library to monitor your MongoDB and push all your [Micrometer](https://micrometer.io/) Stats to an Mongodb.
 
 ## Dependency Setup
 Support Scala 2.12 and Scala 2.13.
 <DependecyGroup/>
 
-## Features:
-* Easy Database Config with [provider](database/provider.md) and MongoConfig
-* Implement the [DAO](https://en.wikipedia.org/wiki/Data_access_object) Pattern for simple MongoDB usage ([MongoDAO](mongo-dao/index.md))
-* [GridFS](https://mongodb.github.io/mongo-java-driver/4.0/driver-scala/tutorials/gridfs/) support ([GridFSDAO](gridfs-dao/index.md))
-* [Reactive Streams](https://mongodb.github.io/mongo-java-driver/4.0/driver-scala/getting-started/quick-start-primer/) support ([Usage in mongocamp](database/reactive-streams.md))
-* Enhanced [BSON](https://mongodb.github.io/mongo-java-driver/4.0/driver-scala/bson/) conversion support ([Bson](database/bson.md))
-* [Relationships](database/relationships.md)
+## Binder
+Micrometer Core supports some [build in Binder](https://github.com/micrometer-metrics/micrometer/tree/main/micrometer-core/src/main/java/io/micrometer/core/instrument/binder/mongodb) for MongoDb Monitoring. But when you want more statistics over other MongoDb Statistics you need individual bindings. Some Binders you can find in our [binding collection](binder/).
 
-## Example: Model
+## Registry
+Possibility to persist your Micrometer Stats to your MongoDB.
 
-Create custom model classes.
-
-<<< @/../src/test/scala/dev/mongocamp/driver/mongodb/model/model.scala#model_student{scala}
-
-## Example: Database
-<<< @/../src/test/scala/dev/mongocamp/driver/mongodb/test/UniversityDatabase.scala{scala}
-
-## Licence
-[Apache 2](https://github.com/MongoCamp/mongodb-driver/blob/master/LICENSE)
+[Apache 2](https://github.com/MongoCamp/micrometer-mongodb/blob/master/LICENSE)

@@ -1,35 +1,22 @@
 ---
 layout: home
 
-title: MongoCamp Mongo Driver
-titleTemplate: MongoCamp Mongo Driver
+title: MongoCamp Micrometer MongoDb
+titleTemplate: MongoCamp Micrometer
 
 hero:
-  name: MongoCamp MongoDb Driver
-  text: fka. simple-mongo
-  tagline: Fastest way to connect your scala application with a MongoDB database.
+  name: MongoCamp Micrometer MongoDb
+  tagline: Micrometer Registry and Binder from MongoDB
   actions:
      - theme: brand
        text: Get Started
        link: /documentation/getting-started
      - theme: alt
        text: View on GitHub
-       link: https://github.com/vuejs/vitepress
+       link: https://github.com/MongoCamp/micrometer-mongodb
 
 features:
-  - title: Easy Config
-    details: Easy Database Config with provider and MongoConfig
-  - title: DAO Pattern
-    details: Implement the DAO Pattern for simple MongoDB usage [MongoDAO.
-  - title: Pagination
-    details: Use Pagination in your MongoDB for a lower RAM needing over large responses.
-  - title: Enhanced BSON
-    details: Implicit Conversion from Scala Map to BSON 
-  - title: GridFS Support
-    details: It provides easy upload, download and metadata handling.
-  - title: Reactive Streams
-    details: The MongoDB Scala driver is built upon Reactive Streams.
-  - title: Relationships
-    details: Sometimes there is a need for relationsips beetween collections, now you can have it.
-  - title: Lucene Query
-    details: Use Apache Lucene Query Language in MongoDb
+  - title: Monitor your MongoDB
+    details: Many new Binder from monitoring you MongoDB 
+  - title: Persist your Stats
+    details: Persist you Micrometer Statistics to you MongoDB
