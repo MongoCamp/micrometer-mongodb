@@ -65,6 +65,8 @@ libraryDependencies += "dev.mongocamp" %% "mongodb-driver" % "2.6.1"
 
 libraryDependencies += "io.micrometer" % "micrometer-core" % "1.10.5"
 
+libraryDependencies += "com.github.blemale" %% "scaffeine" % "5.2.1"
+
 buildInfoPackage := "dev.mongocamp.driver.mongodb"
 
 buildInfoOptions += BuildInfoOption.BuildTime
