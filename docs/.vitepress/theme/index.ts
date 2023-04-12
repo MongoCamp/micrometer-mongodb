@@ -3,7 +3,7 @@ import './custom.css'
 import type {App} from 'vue'
 import {anu} from 'anu-vue'
 import 'uno.css'
-import DependecyGroup from './components/DependecyGroup.vue'
+import DependencyGroup from './components/DependencyGroup.vue'
 
 export default {
     ...DefaultTheme,
@@ -11,7 +11,7 @@ export default {
         app.use(anu, {
             registerComponents: true,
         })
-        app.component('DependecyGroup', DependecyGroup)
+        app.component('DependencyGroup', DependencyGroup)
 
     }
 }
