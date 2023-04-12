@@ -4,7 +4,7 @@
 ![](docs/public/logo_with_text_right.png)
 
 ## Introduction
-Persist you [Micrometer](https://micrometer.io/) Stats to an MongoDB or monitor you MongoDB with your app.
+Binder and Registry for Micrometer and MongoDB, to persist your [Micrometer](https://micrometer.io/) Stats to an MongoDB or monitor you MongoDB with your app.
 
 ### Contributing
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/MongoCamp/micrometer-mongodb)

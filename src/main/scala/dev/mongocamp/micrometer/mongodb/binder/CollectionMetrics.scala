@@ -10,7 +10,7 @@ import org.mongodb.scala.{Document, MongoDatabase}
 import scala.jdk.CollectionConverters.IterableHasAsJava
 
 case class CollectionMetrics(mongoDatabase: MongoDatabase, collectionName: String, tags: List[Tag] = List.empty) extends MeterBinder {
-  private val namePrefix = s"mongodb.collection.${mongoDatabase.name}.$collectionName"
+  private val namePrefix = s"mongodb.collection.${mongoDatabase.name}.${collectionName}"
 
   override def bindTo(registry: MeterRegistry): Unit = {
     Gauge
