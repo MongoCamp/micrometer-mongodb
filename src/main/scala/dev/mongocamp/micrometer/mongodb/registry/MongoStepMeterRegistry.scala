@@ -1,7 +1,8 @@
 package dev.mongocamp.micrometer.mongodb.registry
 
 import dev.mongocamp.driver.mongodb._
-import MongoStepMeterRegistry.threadFactory
+import dev.mongocamp.driver.mongodb.database.{DatabaseProvider, MongoConfig}
+import dev.mongocamp.micrometer.mongodb.registry.MongoStepMeterRegistry.threadFactory
 import io.micrometer.common.util.StringUtils
 import io.micrometer.core.instrument._
 import io.micrometer.core.instrument.step.StepMeterRegistry
@@ -11,34 +12,37 @@ import org.mongodb.scala.Document
 import java.util.Date
 import java.util.concurrent.TimeUnit
 import scala.collection.mutable
+import scala.concurrent.duration.Duration
 import scala.jdk.CollectionConverters._
 
 class MongoStepMeterRegistry(config: MongoRegistryConfig, threadFactory: NamedThreadFactory = threadFactory, clock: Clock = Clock.SYSTEM)
-    extends StepMeterRegistry(config, clock) {
+  extends StepMeterRegistry(config, clock) {
 
   start(threadFactory)
+
   override def publish(): Unit = {
+    val saveWait = Duration(config.get(s"${config.prefix()}.save"))
     val metrics: Map[String, Any] = getMeters.asScala
       .map(meter => getConventionName(meter.getId) -> convertMeterToMap(meter))
       .toMap
       .filter(_._2.nonEmpty) ++ Map("date" -> new Date())
-    val result = config.mongoDAO.insertOne(documentFromScalaMap(metrics)).result()
-    result
+    val result = config.mongoDAO.insertOne(documentFromScalaMap(metrics)).result(saveWait.toSeconds.toInt)
+    result.wasAcknowledged()
   }
 
   override def getBaseTimeUnit: TimeUnit = TimeUnit.SECONDS
 
   private def convertMeterToMap(meter: Meter): Map[String, Any] = {
-    val KeyMetricType  = "metricType"
-    val KeyTags        = "tags"
-    val KeySum         = "sum"
-    val KeyValue       = "value"
-    val KeyCount       = "count"
-    val KeyMean        = "mean"
-    val KeyUpper       = "upper"
+    val KeyMetricType = "metricType"
+    val KeyTags = "tags"
+    val KeySum = "sum"
+    val KeyValue = "value"
+    val KeyCount = "count"
+    val KeyMean = "mean"
+    val KeyUpper = "upper"
     val KeyActiveTasks = "active_tasks"
-    val keyDuration    = "duration"
-    val id             = meter.getId
+    val keyDuration = "duration"
+    val id = meter.getId
     val defaultFields =
       Map(KeyMetricType -> id.getType.name().toLowerCase(), KeyTags -> getConventionTags(id).asScala.filter(t => StringUtils.isNotBlank(t.getValue)))
     meter match {
@@ -62,7 +66,7 @@ class MongoStepMeterRegistry(config: MongoRegistryConfig, threadFactory: NamedTh
         val sum = t.totalTime(getBaseTimeUnit)
         if (java.lang.Double.isFinite(sum)) {
           val fields: Map[String, Any] = defaultFields ++ Map(KeySum -> sum, KeyCount -> t.count())
-          val mean                     = t.mean(getBaseTimeUnit)
+          val mean = t.mean(getBaseTimeUnit)
           if (java.lang.Double.isFinite(mean)) {
             fields ++ Map(KeyMean -> mean)
           }
@@ -75,9 +79,9 @@ class MongoStepMeterRegistry(config: MongoRegistryConfig, threadFactory: NamedTh
         }
       case t: Timer =>
         defaultFields ++ Map(
-          KeySum   -> t.totalTime(getBaseTimeUnit),
+          KeySum -> t.totalTime(getBaseTimeUnit),
           KeyCount -> t.count(),
-          KeyMean  -> t.mean(getBaseTimeUnit),
+          KeyMean -> t.mean(getBaseTimeUnit),
           KeyUpper -> t.max(getBaseTimeUnit)
         )
       case s: DistributionSummary =>
@@ -100,10 +104,26 @@ class MongoStepMeterRegistry(config: MongoRegistryConfig, threadFactory: NamedTh
 
 object MongoStepMeterRegistry {
 
+  private val providerCache = mutable.Map[String, DatabaseProvider]()
+
   private lazy val threadFactory = new NamedThreadFactory("mongodb-metrics-publisher")
 
-  def apply(mongoDAO: MongoDAO[Document], configurationMap: Map[String, String] = Map()): MongoStepMeterRegistry = {
+  def apply(collectionName: String, configurationMap: Map[String, String]): MongoStepMeterRegistry = {
+    MongoStepMeterRegistry(collectionName, MongoConfig.DefaultConfigPathPrefix, configurationMap)
+  }
+
+  def apply(collectionName: String, configPath: String = MongoConfig.DefaultConfigPathPrefix, configurationMap: Map[String, String] = Map()): MongoStepMeterRegistry = {
+    val provider = providerCache.getOrElse(configPath, DatabaseProvider.fromPath(configPath))
+    providerCache.put(configPath, provider)
+    val mongoDAO = provider.dao(collectionName)
+    MongoStepMeterRegistry(mongoDAO, configurationMap)
+  }
+
+  def apply(mongoDAO: MongoDAO[Document], configurationMap: Map[String, String]): MongoStepMeterRegistry = {
     new MongoStepMeterRegistry(MongoRegistryConfig(mongoDAO, configurationMap))
   }
 
+  def apply(mongoDAO: MongoDAO[Document]): MongoStepMeterRegistry = {
+    new MongoStepMeterRegistry(MongoRegistryConfig(mongoDAO, Map()))
+  }
 }

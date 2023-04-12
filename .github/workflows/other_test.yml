@@ -32,6 +32,7 @@ jobs:
       uses: MongoCamp/mongodb-github-action@1.2.0
       with:
         mongodb-version: ${{ matrix.mongodb-version }}
+        mongodb-port: 4711
     - name: Run tests
       run: |
         timedatectl

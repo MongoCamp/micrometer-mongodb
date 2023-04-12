@@ -1,13 +1,12 @@
 package dev.mongocamp.micrometer.mongodb.registry
 
-import better.files.File
-import com.typesafe.config.{ Config, ConfigFactory }
+import com.typesafe.config.{Config, ConfigFactory}
 import dev.mongocamp.driver.mongodb.MongoDAO
 import dev.mongocamp.micrometer.mongodb.MetricsCache
 import io.micrometer.core.instrument.step.StepRegistryConfig
 import org.mongodb.scala.Document
 
-import java.time
+import scala.concurrent.duration.Duration
 
 case class MongoRegistryConfig(mongoDAO: MongoDAO[Document], configurationMap: Map[String, String] = Map()) extends StepRegistryConfig {
 
@@ -18,7 +17,7 @@ case class MongoRegistryConfig(mongoDAO: MongoDAO[Document], configurationMap: M
   override def get(key: String): String = {
     val value = loadConfigValue(key).orNull
     if (key.equalsIgnoreCase(s"${prefix()}.step") && value != null) {
-      MetricsCache.updateCacheTime(time.Duration.parse(value))
+      MetricsCache.updateCacheTime(Duration(value))
     }
     value
   }

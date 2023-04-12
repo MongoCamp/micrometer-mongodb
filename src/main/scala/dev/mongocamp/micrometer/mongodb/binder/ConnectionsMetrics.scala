@@ -1,29 +1,29 @@
 package dev.mongocamp.micrometer.mongodb.binder
 
 import dev.mongocamp.driver.mongodb._
-import dev.mongocamp.micrometer.mongodb.MetricsCache.metricsCache
+import dev.mongocamp.driver.mongodb.database.{DatabaseProvider, MongoConfig}
 import io.micrometer.core.instrument._
-import io.micrometer.core.instrument.binder.{ BaseUnits, MeterBinder }
-import org.mongodb.scala.{ Document, MongoDatabase }
+import io.micrometer.core.instrument.binder.BaseUnits
+import org.mongodb.scala.MongoDatabase
 
 import scala.jdk.CollectionConverters.IterableHasAsJava
 
-case class ConnectionsMetrics(mongoDatabase: MongoDatabase, tags: List[Tag] = List()) extends ServerMetricsBase {
-  private val namePrefix = "mongodb.server.status.connections"
+case class ConnectionsMetrics(mongoDatabase: MongoDatabase, tags: List[Tag] = List.empty) extends ServerMetricsBase {
+  private val namePrefix = s"mongodb.server.status.connections"
 
   override def bindTo(registry: MeterRegistry): Unit = {
 
     Gauge
       .builder(s"$namePrefix.current", () => getServerStats.getDoubleValue("connections.current"))
       .tags(tags.asJava)
-      .description("The number of incoming connections from clients to the database server. ")
+      .description("The number of incoming connections from clients to the database server.")
       .baseUnit(BaseUnits.CONNECTIONS)
       .register(registry)
 
     Gauge
       .builder(s"$namePrefix.available", () => getServerStats.getDoubleValue("connections.available"))
       .tags(tags.asJava)
-      .description("The number of unused incoming connections available. ")
+      .description("The number of unused incoming connections available.")
       .baseUnit(BaseUnits.CONNECTIONS)
       .register(registry)
 
@@ -48,6 +48,27 @@ case class ConnectionsMetrics(mongoDatabase: MongoDatabase, tags: List[Tag] = Li
       .baseUnit(BaseUnits.CONNECTIONS)
       .register(registry)
 
+  }
+
+}
+
+object ConnectionsMetrics {
+
+  def apply(mongoDatabaseConfigPath: String, tags: List[Tag]): ConnectionsMetrics = {
+    val mongoDatabase = DatabaseProvider.fromPath(mongoDatabaseConfigPath).database()
+    ConnectionsMetrics(mongoDatabase, tags)
+  }
+
+  def apply(mongoDatabaseConfigPath: String): ConnectionsMetrics = {
+    ConnectionsMetrics(mongoDatabaseConfigPath, List.empty)
+  }
+
+  def apply(tags: List[Tag]): ConnectionsMetrics = {
+    ConnectionsMetrics(MongoConfig.DefaultConfigPathPrefix, tags)
+  }
+
+  def apply(): ConnectionsMetrics = {
+    ConnectionsMetrics(List.empty)
   }
 
 }

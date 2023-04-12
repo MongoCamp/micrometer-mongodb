@@ -1,27 +1,27 @@
 package dev.mongocamp.micrometer.mongodb
 
-import com.github.blemale.scaffeine.{ Cache, Scaffeine }
-import com.typesafe.config.{ Config, ConfigFactory }
+import com.github.blemale.scaffeine.{Cache, Scaffeine}
+import com.typesafe.config.{Config, ConfigFactory}
 import org.mongodb.scala.Document
 
-import java.time
+import java.util.concurrent.TimeUnit
 import scala.concurrent.duration._
 
 private[mongodb] object MetricsCache {
 
   private var expireAfterTime = {
     val confValue = conf.getDuration("dev.mongocamp.micrometer.mongodb.step")
-    calculateExpireAfterTime(confValue)
+    calculateExpireAfterTime(Duration(confValue.getNano, TimeUnit.NANOSECONDS))
   }
 
   private var metricsCache: Cache[String, Document] = createCache()
 
-  private def calculateExpireAfterTime(confValue: time.Duration): FiniteDuration = {
+  private def calculateExpireAfterTime(confValue: Duration): FiniteDuration = {
     if (confValue.toSeconds.seconds > 45.seconds) {
       30.seconds
     }
     else {
-      var cacheSeconds = confValue.getSeconds * .75
+      var cacheSeconds = confValue.toSeconds.toDouble * .75
       if (cacheSeconds < 1) {
         cacheSeconds = 1
       }
@@ -36,8 +36,9 @@ private[mongodb] object MetricsCache {
   }
 
   def getMetricsCache: Cache[String, Document] = metricsCache
-  def updateCacheTime(value: time.Duration): Unit = {
-    val newExpireAfterTime = calculateExpireAfterTime(time.Duration.ofMillis(value.toMillis))
+
+  def updateCacheTime(value: Duration): Unit = {
+    val newExpireAfterTime = calculateExpireAfterTime(value)
     if (newExpireAfterTime < expireAfterTime) {
       expireAfterTime = newExpireAfterTime
       metricsCache = createCache()
