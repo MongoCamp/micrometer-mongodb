@@ -26,8 +26,10 @@ class MongoStepMeterRegistry(config: MongoRegistryConfig, threadFactory: NamedTh
       .map(meter => getConventionName(meter.getId) -> convertMeterToMap(meter))
       .toMap
       .filter(_._2.nonEmpty) ++ Map("date" -> new Date())
-    val result = config.mongoDAO.insertOne(documentFromScalaMap(metrics)).result(saveWait.toSeconds.toInt)
-    result.wasAcknowledged()
+    if (metrics.size > 1) {
+      val result = config.mongoDAO.insertOne(documentFromScalaMap(metrics)).result(saveWait.toSeconds.toInt)
+      result.wasAcknowledged()
+    }
   }
 
   override def getBaseTimeUnit: TimeUnit = TimeUnit.SECONDS
