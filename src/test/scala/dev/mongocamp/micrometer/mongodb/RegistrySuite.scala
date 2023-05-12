@@ -78,7 +78,8 @@ class RegistrySuite extends BaseSuite {
     // #endregion registry-with-overridden-config
     new JvmGcMetrics().bindTo(registry)
     new JvmMemoryMetrics().bindTo(registry)
-    Thread.sleep(15.seconds.toMillis)
+    Thread.sleep(31.seconds.toMillis)
+    registry.getMeters
     val dao = MongoTestServer.provider.dao(collectionName)
     val count = dao.count().result()
     assertEquals(count >= 1, true)
