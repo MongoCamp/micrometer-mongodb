@@ -1,4 +1,11 @@
-## 0.5.0 (2023-04-06)
+## [0.6.0]() (2023-04-12)
+
+
+### Features
+
+* apply methods for default values of registry and binder ([ddf00df](https://github.com/MongoCamp/micrometer-mongodb/commit/ddf00df3bee48c6632db96b80117eed5fa932b79))
+
+## [0.5.0]() (2023-04-06)
 
 
 ### Features

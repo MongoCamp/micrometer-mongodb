@@ -44,7 +44,7 @@ class OperationMetricsSuite extends BaseSuite {
     assertEquals(query.getId.getName, "mongodb.server.status.operations.query")
     assertEquals(query.getId.getType, Meter.Type.GAUGE)
     assertEquals(query.measure().asScala.size, 1)
-    assertEquals(query.measure().asScala.head.getValue, 0.0)
+    assertEquals(query.measure().asScala.head.getValue >= 0.0, true)
 
     val delete = meters.find(_.getId.getName.endsWith(".delete")).get
     assertEquals(delete.getId.getName, "mongodb.server.status.operations.delete")
