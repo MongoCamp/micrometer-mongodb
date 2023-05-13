@@ -5,7 +5,7 @@ import dev.mongocamp.micrometer.mongodb.registry.MongoStepMeterRegistry
 import io.micrometer.core.instrument.binder.jvm.{JvmGcMetrics, JvmMemoryMetrics}
 
 import java.util.Date
-import scala.concurrent.duration.DurationInt
+import scala.concurrent.duration.{Duration, DurationInt}
 
 class RegistrySuite extends BaseSuite {
 
@@ -17,7 +17,7 @@ class RegistrySuite extends BaseSuite {
     // #endregion registry-with-config-string
     new JvmGcMetrics().bindTo(registry)
     new JvmMemoryMetrics().bindTo(registry)
-    Thread.sleep(11.seconds.toMillis)
+    sleep(21.seconds)
     val dao = MongoTestServer.provider.dao(collectionName)
     val count = dao.count().result()
     assertEquals(count >= 2, true)
@@ -35,7 +35,7 @@ class RegistrySuite extends BaseSuite {
     val registry = MongoStepMeterRegistry(collectionName, "unit.test.mongo", Map("step" -> "15s"))
     new JvmGcMetrics().bindTo(registry)
     new JvmMemoryMetrics().bindTo(registry)
-    Thread.sleep(31.seconds.toMillis)
+    sleep(31.seconds)
     registry.getMeters
     val dao = MongoTestServer.provider.dao(collectionName)
     val count = dao.count().result()
@@ -58,7 +58,7 @@ class RegistrySuite extends BaseSuite {
     // #endregion registry-with-dao
     new JvmGcMetrics().bindTo(registry)
     new JvmMemoryMetrics().bindTo(registry)
-    Thread.sleep(11.seconds.toMillis)
+    sleep(21.seconds)
     val count = dao.count().result()
     assertEquals(count >= 2, true)
     val headDocument = dao.find().result()
@@ -79,7 +79,7 @@ class RegistrySuite extends BaseSuite {
     // #endregion registry-with-overridden-config
     new JvmGcMetrics().bindTo(registry)
     new JvmMemoryMetrics().bindTo(registry)
-    Thread.sleep(31.seconds.toMillis)
+    sleep(31.seconds)
     registry.getMeters
     val dao = MongoTestServer.provider.dao(collectionName)
     val count = dao.count().result()
@@ -90,5 +90,9 @@ class RegistrySuite extends BaseSuite {
     assertEquals(!(testDate.before(startDate) || testDate.after(endDate)), true)
     val jvmGcMaxData = headDocument.getValueOption("jvm_gc_max_data_size")
     assertEquals(jvmGcMaxData.isDefined, true)
+  }
+
+  private def sleep(duration: Duration): Unit = {
+    Thread.sleep(duration.toMillis)
   }
 }
