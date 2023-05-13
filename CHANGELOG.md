@@ -1,3 +1,10 @@
+## [0.6.1]() (2023-05-13)
+
+
+### Bug Fixes
+
+* ignore saves when only date is in save map ([2d83fb2](https://github.com/MongoCamp/micrometer-mongodb/commit/2d83fb2d1cc939d6e5c606b804f9f8cbf94a20ba))
+
 ## [0.6.0]() (2023-04-12)
 
 
