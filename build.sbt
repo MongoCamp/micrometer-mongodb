@@ -59,7 +59,7 @@ buildInfoOptions += BuildInfoOption.BuildTime
 
 resolvers += "Sonatype OSS Snapshots".at("https://oss.sonatype.org/content/repositories/snapshots")
 
-libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.4.7"
+libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.4.8"
 
 libraryDependencies += "dev.mongocamp" %% "mongodb-driver" % "2.6.3"
 
