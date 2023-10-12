@@ -1,7 +1,7 @@
 {
   "name" : "micrometer-mongodb",
   "organization" : "dev.mongocamp",
-  "version" : "0.6.3",
+  "version" : "0.6.4.snapshot",
   "author" : "info@mongocamp.dev",
   "license" : "Apache-2.0",
   "repository" : {
