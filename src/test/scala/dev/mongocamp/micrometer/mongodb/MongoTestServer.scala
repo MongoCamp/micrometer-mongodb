@@ -11,9 +11,9 @@ import de.flapdoodle.reverse.TransitionWalker
 import de.flapdoodle.reverse.transitions.Start
 import dev.mongocamp.driver.mongodb.database.DatabaseProvider
 import sttp.capabilities
-import sttp.capabilities.akka.AkkaStreams
+import sttp.capabilities.pekko.PekkoStreams
 import sttp.client3._
-import sttp.client3.akkahttp.AkkaHttpBackend
+import sttp.client3.pekkohttp.PekkoHttpBackend
 import sttp.model.Method
 
 import scala.concurrent.duration.DurationInt
