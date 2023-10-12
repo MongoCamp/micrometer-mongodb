@@ -3,7 +3,7 @@ package dev.mongocamp.micrometer.mongodb.binder
 import dev.mongocamp.driver.mongodb._
 import dev.mongocamp.micrometer.mongodb.MetricsCache
 import io.micrometer.core.instrument.binder.MeterBinder
-import org.mongodb.scala.{Document, MongoDatabase}
+import org.mongodb.scala.{ Document, MongoDatabase }
 trait ServerMetricsBase extends MeterBinder {
 
   def mongoDatabase: MongoDatabase

@@ -1,7 +1,7 @@
 package dev.mongocamp.micrometer.mongodb.registry
 
 import dev.mongocamp.driver.mongodb._
-import dev.mongocamp.driver.mongodb.database.{DatabaseProvider, MongoConfig}
+import dev.mongocamp.driver.mongodb.database.{ DatabaseProvider, MongoConfig }
 import dev.mongocamp.micrometer.mongodb.registry.MongoStepMeterRegistry.threadFactory
 import io.micrometer.common.util.StringUtils
 import io.micrometer.core.instrument._

@@ -1,7 +1,7 @@
 package dev.mongocamp.micrometer.mongodb.binder
 
 import dev.mongocamp.driver.mongodb._
-import dev.mongocamp.driver.mongodb.database.{DatabaseProvider, MongoConfig}
+import dev.mongocamp.driver.mongodb.database.{ DatabaseProvider, MongoConfig }
 import io.micrometer.core.instrument._
 import io.micrometer.core.instrument.binder.BaseUnits
 import org.mongodb.scala.MongoDatabase

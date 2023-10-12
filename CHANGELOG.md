@@ -1,3 +1,15 @@
+## [0.6.2]() (2023-10-12)
+
+
+### Code Refactoring
+
+* Replace Akka with Pekko ([364f739](https://github.com/MongoCamp/micrometer-mongodb/commit/364f739b8fbb17a339370469694f5dcffb42da95))
+
+
+### Maintenance
+
+* **dependenies:** Update for many Dependencies ([cbe9f93](https://github.com/MongoCamp/micrometer-mongodb/commit/cbe9f93aa509300f10f0e1ed865808030cd53676))
+
 ## [0.6.1]() (2023-05-13)
 
 
