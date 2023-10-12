@@ -1,4 +1,4 @@
-import scala.sys.process._
+import scala.sys.process.*
 
 commands += Command.command("ci-deploy-docs")((state: State) => {
   val lowerCaseVersion = version.value.toLowerCase

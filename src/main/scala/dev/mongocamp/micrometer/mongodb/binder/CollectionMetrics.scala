@@ -1,11 +1,11 @@
 package dev.mongocamp.micrometer.mongodb.binder
 
 import dev.mongocamp.driver.mongodb._
-import dev.mongocamp.driver.mongodb.database.{ DatabaseProvider, MongoConfig }
+import dev.mongocamp.driver.mongodb.database.{DatabaseProvider, MongoConfig}
 import dev.mongocamp.micrometer.mongodb.MetricsCache
-import io.micrometer.core.instrument.binder.{ BaseUnits, MeterBinder }
-import io.micrometer.core.instrument.{ Gauge, MeterRegistry, Tag }
-import org.mongodb.scala.{ Document, MongoDatabase }
+import io.micrometer.core.instrument.binder.{BaseUnits, MeterBinder}
+import io.micrometer.core.instrument.{Gauge, MeterRegistry, Tag}
+import org.mongodb.scala.{Document, MongoDatabase}
 
 import scala.jdk.CollectionConverters.IterableHasAsJava
 
