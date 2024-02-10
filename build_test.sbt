@@ -9,17 +9,17 @@ Test / scalacOptions ++= Seq("-Yrangepos")
 // Test
 libraryDependencies += "org.scalameta" %% "munit" % "0.7.29" % Test
 
-libraryDependencies += "de.flapdoodle.embed" % "de.flapdoodle.embed.mongo" % "4.9.2" % Test
+libraryDependencies += "de.flapdoodle.embed" % "de.flapdoodle.embed.mongo" % "4.12.2" % Test
 
-val PekkoVersion = "1.0.1"
+val PekkoVersion = "1.0.2"
 libraryDependencies += "org.apache.pekko" %% "pekko-slf4j"  % PekkoVersion
 
 libraryDependencies += "org.apache.pekko" %% "pekko-stream" % PekkoVersion
 
-libraryDependencies += "org.apache.pekko" %% "pekko-http"   % "1.0.0" % Test
+libraryDependencies += "org.apache.pekko" %% "pekko-http"   % "1.0.1" % Test
 
 
 
-val sttClientVersion = "3.9.0"
+val sttClientVersion = "3.9.3"
 libraryDependencies += "com.softwaremill.sttp.client3" %% "pekko-http-backend" % sttClientVersion % Test
 libraryDependencies += "com.softwaremill.sttp.client3" %% "core"              % sttClientVersion % Test
