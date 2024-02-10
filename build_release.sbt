@@ -34,7 +34,7 @@ releaseCommitMessage     := s"ci: prepare release of version ${runtimeVersion.va
 
 commands += Command.command("ci-release")((state: State) => {
   val semVersion = new Semver(version.value)
-  if (semVersion.isStable) {
+  if (semVersion.getSuffixTokens != null && semVersion.getSuffixTokens.length == 0) {
     Command.process("release with-defaults", state)
   }
   else {
