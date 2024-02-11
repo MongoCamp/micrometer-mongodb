@@ -49,7 +49,6 @@ releaseProcess := {
     setToMyReleaseVersion,
     commitReleaseVersion,
     tagRelease,
-    releaseStepCommand("ci-release"),
     releaseStepCommandAndRemaining("+publishSigned"),
     releaseStepCommand("sonatypeBundleRelease"),
     setToMyNextVersion,
