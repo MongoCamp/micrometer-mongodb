@@ -46,11 +46,13 @@ releaseProcess := {
   Seq[ReleaseStep](
     checkSnapshotDependencies,
     inquireVersions,
+    runClean,
     setToMyReleaseVersion,
     commitReleaseVersion,
     tagRelease,
     releaseStepCommandAndRemaining("+publishSigned"),
     releaseStepCommand("sonatypeBundleRelease"),
+    releaseStepCommand("ci-deploy-docs"),
     setToMyNextVersion,
     releaseStepCommand("scalafmt"),
     gitAddAllTask,
