@@ -49,7 +49,7 @@ releaseProcess := {
     setToMyReleaseVersion,
     commitReleaseVersion,
     tagRelease,
-    releaseStepCommand("ci-docker"),
+    releaseStepCommand("ci-release"),
     releaseStepCommandAndRemaining("+publishSigned"),
     releaseStepCommand("sonatypeBundleRelease"),
     setToMyNextVersion,
