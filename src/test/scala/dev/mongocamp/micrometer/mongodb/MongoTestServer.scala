@@ -2,47 +2,35 @@ package dev.mongocamp.micrometer.mongodb
 
 import better.files.File
 import com.typesafe.scalalogging.LazyLogging
-import de.flapdoodle.embed.mongo.config.Net
-import de.flapdoodle.embed.mongo.distribution.Version
-import de.flapdoodle.embed.mongo.transitions.{Mongod, RunningMongodProcess}
-import de.flapdoodle.embed.mongo.types.DatabaseDir
-import de.flapdoodle.embed.process.io.ProcessOutput
-import de.flapdoodle.reverse.TransitionWalker
-import de.flapdoodle.reverse.transitions.Start
 import dev.mongocamp.driver.mongodb.database.DatabaseProvider
+import org.testcontainers.containers.GenericContainer
+import org.testcontainers.containers.wait.strategy.Wait
 import sttp.capabilities
 import sttp.capabilities.pekko.PekkoStreams
 import sttp.client3._
 import sttp.client3.pekkohttp.PekkoHttpBackend
 import sttp.model.Method
 
-import scala.concurrent.duration.DurationInt
 import scala.concurrent.{Await, Future}
+import scala.concurrent.duration.DurationInt
+import scala.jdk.CollectionConverters._
+import scala.jdk.DurationConverters._
+import scala.util.Random
 
 object MongoTestServer extends LazyLogging {
+  var port : Int = 4711
 
-  lazy val provider = DatabaseProvider.fromPath("unit.test.mongo")
-  lazy val providerMetrics = DatabaseProvider.fromPath("unit.test.mongo.metrics")
+  lazy val provider : DatabaseProvider = DatabaseProvider.fromPath("unit.test.mongo")
+  lazy val providerMetrics: DatabaseProvider = DatabaseProvider.fromPath("unit.test.mongo.metrics")
 
   private var running: Boolean = false
-
   private lazy val backend: SttpBackend[Future, PekkoStreams with capabilities.WebSockets] = PekkoHttpBackend()
 
-  private var mongodExecutable: Mongod = initMonoExecutable
-
-  private var tempDir = File.newTemporaryDirectory()
-
-  lazy val mongoPort: Int = 4711
-
-  var process: TransitionWalker.ReachedState[RunningMongodProcess] = null
-
-  private def initMonoExecutable: Mongod = {
-    val mongod  = Mongod.builder()
-      .net(Start.to(classOf[Net]).providedBy(() => Net.builder().port(mongoPort).bindIp(Net.defaults().getBindIp).isIpv6(false).build()))
-      .databaseDir(Start.to(classOf[DatabaseDir]).providedBy(() => DatabaseDir.of(tempDir.path)))
-      .processOutput(Start.to(classOf[ProcessOutput]).providedBy(() => ProcessOutput.silent()))
-      .build()
-    mongod
+  private lazy val containerConfiguration: GenericContainer[_] = {
+    val mongoDbContainer = new GenericContainer(s"mongocamp/mongodb:latest")
+    mongoDbContainer.withExposedPorts(27017)
+    mongoDbContainer.waitingFor(Wait.forLogMessage("(.*?)child process started successfully, parent exiting(.*?)", 2).withStartupTimeout(60.seconds.toJava))
+    mongoDbContainer
   }
 
   def isRunning: Boolean = running
@@ -50,15 +38,15 @@ object MongoTestServer extends LazyLogging {
   def checkForLocalRunningMongoDb(): Unit = {
     if (!running) {
       try {
-        val checkRequest = basicRequest.method(Method.GET, uri"http://localhost:4711").response(asString)
+        val checkRequest   = basicRequest.method(Method.GET, uri"http://localhost:$port").response(asString)
         val resultFuture = backend.send(checkRequest)
         val responseResult = Await.result(resultFuture, 1.seconds).body.getOrElse("not found")
         if (responseResult.contains("HTTP on the native driver port.")) {
           println("Use local running MongoDb")
-          System.setProperty("CONNECTION_PORT", "4711")
           running = true
         }
-      } catch {
+      }
+      catch {
         case e: Exception =>
           e.getMessage
       }
@@ -69,23 +57,28 @@ object MongoTestServer extends LazyLogging {
   def startMongoDatabase(): Unit = {
     checkForLocalRunningMongoDb()
     if (!running) {
-      process = mongodExecutable.start(Version.V6_0_5)
+      try {
+        val ports: List[String] = List(port).map(
+          i => s"$i:27017/tcp"
+        )
+        containerConfiguration.setPortBindings(ports.asJava)
+        containerConfiguration.start()
+      } catch {
+        case _: Throwable =>
+      }
       running = true
       sys.addShutdownHook({
         println("Shutdown for MongoDB Server triggered.")
         stopMongoDatabase()
       })
+
     }
   }
 
   def stopMongoDatabase(): Unit = {
     if (running) {
-      process.current().stop()
-      process = null
+      containerConfiguration.stop()
       running = false
-      tempDir.delete()
-      tempDir = File.newTemporaryDirectory()
-      mongodExecutable = initMonoExecutable
     }
   }
 

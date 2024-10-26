@@ -8,6 +8,7 @@ import java.util.Date
 import scala.concurrent.duration.{Duration, DurationInt}
 
 class RegistrySuite extends BaseSuite {
+  override def munitTimeout: Duration = 1.minutes
 
   test("check and push information to mongodb from configuration") {
     val startDate = new Date()
