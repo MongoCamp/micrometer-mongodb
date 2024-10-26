@@ -1,3 +1,17 @@
+## [v1.0.0] - 2024-10-26
+### :boom: BREAKING CHANGES
+- due to [`6b8ae17`](https://github.com/MongoCamp/micrometer-mongodb/commit/6b8ae174016edcdf6dde6cf56146f9bba9d7a1ec) - Drop Java 11 and 19 Support *(commit by [@QuadStingray](https://github.com/QuadStingray))*:
+
+  Only support Java 21+ now
+
+
+### :recycle: Refactors
+- [`6b8ae17`](https://github.com/MongoCamp/micrometer-mongodb/commit/6b8ae174016edcdf6dde6cf56146f9bba9d7a1ec) - **jvm**: Drop Java 11 and 19 Support *(commit by [@QuadStingray](https://github.com/QuadStingray))*
+
+### :wrench: Chores
+- [`727ced6`](https://github.com/MongoCamp/micrometer-mongodb/commit/727ced6995d449e78bc343dba68744573cc325b2) - 12 dependency updates for micrometer-mongodb *(commit by [@QuadStingray](https://github.com/QuadStingray))*
+
+
 ## [0.6.3]() (2023-10-12)
 
 ## [0.6.2]() (2023-10-12)
@@ -28,3 +42,4 @@
 ### Features
 
 * add missing dependencies ([737f92e](https://github.com/MongoCamp/micrometer-mongodb/commit/737f92e5cf77964623d7102544e2d4e33c7ecc4f))* extract from mongocamp-server to own package ([cc1324c](https://github.com/MongoCamp/micrometer-mongodb/commit/cc1324c9ac5ddb414127d1515a6ed8dfad907ecd))* removed 2.12 support ([2596bd6](https://github.com/MongoCamp/micrometer-mongodb/commit/2596bd641315e3c134e938cbe0bb3744e57ab884))
+[v1.0.0]: https://github.com/MongoCamp/micrometer-mongodb/compare/v0.7.1...v1.0.0
