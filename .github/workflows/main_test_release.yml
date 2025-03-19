@@ -18,7 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@main
       - name: Setup TimeZone
-        uses: szenius/set-timezone@master
+        uses: MathRobin/timezone-action@v1.1
         with:
           timezoneLinux: "Europe/Berlin"
           timezoneMacos: "Europe/Berlin"
@@ -36,7 +36,6 @@ jobs:
         run: |
           timedatectl
           sbt +test
-
   release:
     needs: test
     runs-on: ubuntu-latest
@@ -46,22 +45,14 @@ jobs:
         with:
           fetch-depth: 0
           token: ${{ secrets.GH_ADMIN_TOKEN }}
-
       - id: install-secret-key
         name: Install gpg secret key
         run: cat <(echo -e "${{ secrets.PGP_SECRET_KEY }}") | gpg --batch --import
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@master
-        with:
-          version: 8
-
       - name: Set up JDK
         uses: coursier/setup-action@main
         with:
           jvm: corretto:17
           apps: sbt scala scalac
-
       - name: Release
         env:
           GITHUB_USER: ${{ github.actor }}
