@@ -10,7 +10,7 @@ case class DatabaseMetrics(mongoDatabase: MongoDatabase, tags: List[Tag] = List.
 
   override def bindTo(registry: MeterRegistry): Unit = {
     mongoDatabase.listCollections().resultList().foreach(collection => {
-      val metric = CollectionMetrics(mongoDatabase, collection.getString("name"), tags)
+      val metric = CollectionMetrics(mongoDatabase, collection.get("name").get.asString().getValue, tags)
       metric.bindTo(registry)
     })
   }
