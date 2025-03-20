@@ -9,13 +9,10 @@ import org.mongodb.scala.MongoDatabase
 case class DatabaseMetrics(mongoDatabase: MongoDatabase, tags: List[Tag] = List.empty) extends MeterBinder {
 
   override def bindTo(registry: MeterRegistry): Unit = {
-    mongoDatabase
-      .listCollections()
-      .resultList()
-      .foreach(collection => {
-        val metric = CollectionMetrics(mongoDatabase, collection.getString("name"), tags)
-        metric.bindTo(registry)
-      })
+    mongoDatabase.listCollections().resultList().foreach(collection => {
+      val metric = CollectionMetrics(mongoDatabase, collection.get("name").get.asString().getValue, tags)
+      metric.bindTo(registry)
+    })
   }
 
 }

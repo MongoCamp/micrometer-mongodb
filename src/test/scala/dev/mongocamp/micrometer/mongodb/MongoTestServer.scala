@@ -1,6 +1,5 @@
 package dev.mongocamp.micrometer.mongodb
 
-import better.files.File
 import com.typesafe.scalalogging.LazyLogging
 import dev.mongocamp.driver.mongodb.database.DatabaseProvider
 import org.testcontainers.containers.GenericContainer
@@ -15,15 +14,14 @@ import scala.concurrent.{Await, Future}
 import scala.concurrent.duration.DurationInt
 import scala.jdk.CollectionConverters._
 import scala.jdk.DurationConverters._
-import scala.util.Random
 
 object MongoTestServer extends LazyLogging {
-  var port : Int = 4711
+  var port: Int = 4711
 
-  lazy val provider : DatabaseProvider = DatabaseProvider.fromPath("unit.test.mongo")
+  lazy val provider: DatabaseProvider        = DatabaseProvider.fromPath("unit.test.mongo")
   lazy val providerMetrics: DatabaseProvider = DatabaseProvider.fromPath("unit.test.mongo.metrics")
 
-  private var running: Boolean = false
+  private var running: Boolean                                                             = false
   private lazy val backend: SttpBackend[Future, PekkoStreams with capabilities.WebSockets] = PekkoHttpBackend()
 
   private lazy val containerConfiguration: GenericContainer[_] = {
@@ -39,7 +37,7 @@ object MongoTestServer extends LazyLogging {
     if (!running) {
       try {
         val checkRequest   = basicRequest.method(Method.GET, uri"http://localhost:$port").response(asString)
-        val resultFuture = backend.send(checkRequest)
+        val resultFuture   = backend.send(checkRequest)
         val responseResult = Await.result(resultFuture, 1.seconds).body.getOrElse("not found")
         if (responseResult.contains("HTTP on the native driver port.")) {
           println("Use local running MongoDb")
@@ -63,14 +61,15 @@ object MongoTestServer extends LazyLogging {
         )
         containerConfiguration.setPortBindings(ports.asJava)
         containerConfiguration.start()
-      } catch {
+      }
+      catch {
         case _: Throwable =>
       }
       running = true
-      sys.addShutdownHook({
+      sys.addShutdownHook {
         println("Shutdown for MongoDB Server triggered.")
         stopMongoDatabase()
-      })
+      }
 
     }
   }

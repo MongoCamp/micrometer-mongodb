@@ -40,7 +40,7 @@ developers := List(
 
 licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0.html"))
 
-crossScalaVersions := Seq("2.13.15")
+crossScalaVersions := Seq("3.6.0", "2.13.16")
 
 scalaVersion := crossScalaVersions.value.head
 
@@ -59,11 +59,11 @@ buildInfoOptions += BuildInfoOption.BuildTime
 
 resolvers += "Sonatype OSS Snapshots".at("https://oss.sonatype.org/content/repositories/snapshots")
 
-libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.5.12"
+libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.5.18"
 
-libraryDependencies += "dev.mongocamp" %% "mongodb-driver" % "2.8.0"
+libraryDependencies += "dev.mongocamp" %% "mongodb-driver" % "3.0.0"
 
-libraryDependencies += "io.micrometer" % "micrometer-core" % "1.13.6"
+libraryDependencies += "io.micrometer" % "micrometer-core" % "1.14.5"
 
 libraryDependencies += "com.github.blemale" %% "scaffeine" % "5.3.0"
 
