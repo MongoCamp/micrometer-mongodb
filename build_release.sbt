@@ -5,6 +5,8 @@ import sbtrelease.ReleasePlugin.autoImport.ReleaseTransformations._
 import sbtrelease.ReleasePlugin.runtimeVersion
 import scala.sys.process._
 
+releaseVersionBump := sbtrelease.Version.Bump.NextStable
+
 val gitAddAllTask = ReleaseStep(action = st => {
   "git add .".!
   st
