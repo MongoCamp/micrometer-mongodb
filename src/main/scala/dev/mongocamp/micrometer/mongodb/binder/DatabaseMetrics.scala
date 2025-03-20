@@ -1,9 +1,9 @@
 package dev.mongocamp.micrometer.mongodb.binder
 
 import dev.mongocamp.driver.mongodb._
-import dev.mongocamp.driver.mongodb.database.{DatabaseProvider, MongoConfig}
+import dev.mongocamp.driver.mongodb.database.{ DatabaseProvider, MongoConfig }
 import io.micrometer.core.instrument.binder.MeterBinder
-import io.micrometer.core.instrument.{MeterRegistry, Tag}
+import io.micrometer.core.instrument.{ MeterRegistry, Tag }
 import org.mongodb.scala.MongoDatabase
 
 case class DatabaseMetrics(mongoDatabase: MongoDatabase, tags: List[Tag] = List.empty) extends MeterBinder {
