@@ -1,3 +1,18 @@
+## [v1.0.2] - 2025-03-21
+### :sparkles: New Features
+- [`d27a659`](https://github.com/MongoCamp/micrometer-mongodb/commit/d27a659f90e61da37e6b14786b5ebbf115871114) - scala 3 version *(commit by [@QuadStingray](https://github.com/QuadStingray))*
+
+### :recycle: Refactors
+- [`ad64fe7`](https://github.com/MongoCamp/micrometer-mongodb/commit/ad64fe71244ad093ea3e73bb4236ebeac783ba95) - changes for scala 3 *(commit by [@QuadStingray](https://github.com/QuadStingray))*
+
+### :white_check_mark: Tests
+- [`2b8e8a2`](https://github.com/MongoCamp/micrometer-mongodb/commit/2b8e8a2c99cf25d618b44150f27466254625913c) - cleanup database for +test *(commit by [@QuadStingray](https://github.com/QuadStingray))*
+
+### :wrench: Chores
+- [`83ecc4f`](https://github.com/MongoCamp/micrometer-mongodb/commit/83ecc4f2fad5cb1ce597afe35a3dedd4f88151f8) - 10 dependency updates for micrometer-mongodb *(commit by [@QuadStingray](https://github.com/QuadStingray))*
+- [`7be0a67`](https://github.com/MongoCamp/micrometer-mongodb/commit/7be0a6704fd1843d40635e88747044abdbe8c7a1) - update many dependencies for plugins *(commit by [@QuadStingray](https://github.com/QuadStingray))*
+
+
 ## [v1.0.1] - 2024-10-27
 ### :bug: Bug Fixes
 - [`f3e2ef0`](https://github.com/MongoCamp/micrometer-mongodb/commit/f3e2ef04f845af17658861411890922139c2d596) - mongodb-driver 5.1.4 not longer support method `listCollectionNames()` *(commit by [@QuadStingray](https://github.com/QuadStingray))*
@@ -50,3 +65,4 @@
 * add missing dependencies ([737f92e](https://github.com/MongoCamp/micrometer-mongodb/commit/737f92e5cf77964623d7102544e2d4e33c7ecc4f))* extract from mongocamp-server to own package ([cc1324c](https://github.com/MongoCamp/micrometer-mongodb/commit/cc1324c9ac5ddb414127d1515a6ed8dfad907ecd))* removed 2.12 support ([2596bd6](https://github.com/MongoCamp/micrometer-mongodb/commit/2596bd641315e3c134e938cbe0bb3744e57ab884))
 [v1.0.0]: https://github.com/MongoCamp/micrometer-mongodb/compare/v0.7.1...v1.0.0
 [v1.0.1]: https://github.com/MongoCamp/micrometer-mongodb/compare/v1.0.0...v1.0.1
+[v1.0.2]: https://github.com/MongoCamp/micrometer-mongodb/compare/v1.0.1...v1.0.2
