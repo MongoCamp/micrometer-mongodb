@@ -1,12 +1,16 @@
 package dev.mongocamp.micrometer.mongodb.binder
 
 import dev.mongocamp.driver.mongodb._
-import dev.mongocamp.driver.mongodb.database.{ DatabaseProvider, MongoConfig }
+import dev.mongocamp.driver.mongodb.database.DatabaseProvider
+import dev.mongocamp.driver.mongodb.database.MongoConfig
 import dev.mongocamp.micrometer.mongodb.MetricsCache
-import io.micrometer.core.instrument.binder.{ BaseUnits, MeterBinder }
-import io.micrometer.core.instrument.{ Gauge, MeterRegistry, Tag }
-import org.mongodb.scala.{ Document, MongoDatabase }
-
+import io.micrometer.core.instrument.binder.BaseUnits
+import io.micrometer.core.instrument.binder.MeterBinder
+import io.micrometer.core.instrument.Gauge
+import io.micrometer.core.instrument.MeterRegistry
+import io.micrometer.core.instrument.Tag
+import org.mongodb.scala.Document
+import org.mongodb.scala.MongoDatabase
 import scala.jdk.CollectionConverters.IterableHasAsJava
 
 case class CollectionMetrics(mongoDatabase: MongoDatabase, collectionName: String, tags: List[Tag] = List.empty) extends MeterBinder {
@@ -45,11 +49,11 @@ case class CollectionMetrics(mongoDatabase: MongoDatabase, collectionName: Strin
   private def getCollectionStats: Document = {
     val cacheKey       = s"${mongoDatabase.name}:::${collectionName}"
     val cachedDocument = MetricsCache.getMetricsCache.getIfPresent(cacheKey)
-    cachedDocument.getOrElse({
+    cachedDocument.getOrElse {
       val freshDocument = refreshCollectionStatsFromDatabase
       MetricsCache.getMetricsCache.put(cacheKey, freshDocument)
       freshDocument
-    })
+    }
   }
 
   private def refreshCollectionStatsFromDatabase: Document = {

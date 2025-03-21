@@ -2,18 +2,18 @@ package dev.mongocamp.micrometer.mongodb
 
 import com.typesafe.scalalogging.LazyLogging
 import dev.mongocamp.driver.mongodb.database.DatabaseProvider
-import org.testcontainers.containers.GenericContainer
 import org.testcontainers.containers.wait.strategy.Wait
+import org.testcontainers.containers.GenericContainer
+import scala.concurrent.duration.DurationInt
+import scala.concurrent.Await
+import scala.concurrent.Future
+import scala.jdk.CollectionConverters._
+import scala.jdk.DurationConverters._
 import sttp.capabilities
 import sttp.capabilities.pekko.PekkoStreams
 import sttp.client3._
 import sttp.client3.pekkohttp.PekkoHttpBackend
 import sttp.model.Method
-
-import scala.concurrent.{Await, Future}
-import scala.concurrent.duration.DurationInt
-import scala.jdk.CollectionConverters._
-import scala.jdk.DurationConverters._
 
 object MongoTestServer extends LazyLogging {
   var port: Int = 4711

@@ -1,10 +1,11 @@
 package dev.mongocamp.micrometer.mongodb
 
-import com.github.blemale.scaffeine.{ Cache, Scaffeine }
-import com.typesafe.config.{ Config, ConfigFactory }
-import org.mongodb.scala.Document
-
+import com.github.blemale.scaffeine.Cache
+import com.github.blemale.scaffeine.Scaffeine
+import com.typesafe.config.Config
+import com.typesafe.config.ConfigFactory
 import java.util.concurrent.TimeUnit
+import org.mongodb.scala.Document
 import scala.concurrent.duration._
 
 private[mongodb] object MetricsCache {

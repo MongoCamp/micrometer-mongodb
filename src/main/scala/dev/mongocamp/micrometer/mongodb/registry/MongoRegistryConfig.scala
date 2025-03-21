@@ -1,11 +1,11 @@
 package dev.mongocamp.micrometer.mongodb.registry
 
-import com.typesafe.config.{ Config, ConfigFactory }
+import com.typesafe.config.Config
+import com.typesafe.config.ConfigFactory
 import dev.mongocamp.driver.mongodb.MongoDAO
 import dev.mongocamp.micrometer.mongodb.MetricsCache
 import io.micrometer.core.instrument.step.StepRegistryConfig
 import org.mongodb.scala.Document
-
 import scala.concurrent.duration.Duration
 
 case class MongoRegistryConfig(mongoDAO: MongoDAO[Document], configurationMap: Map[String, String] = Map()) extends StepRegistryConfig {
@@ -25,7 +25,9 @@ case class MongoRegistryConfig(mongoDAO: MongoDAO[Document], configurationMap: M
   private def loadConfigValue(key: String): Option[String] = {
     try {
       val mapKey = key.replace(s"$prefix.", "")
-      (configurationMap.get(mapKey) ++ configurationMap.get(key)).foreach(v => return Some(v))
+      (configurationMap.get(mapKey) ++ configurationMap.get(key)).foreach(
+        v => return Some(v)
+      )
       Option(conf.getValue(key).render().replace("\"", ""))
     }
     catch {

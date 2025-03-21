@@ -81,7 +81,7 @@ class RegistrySuite extends BaseSuite {
     val configurationMap = Map("step" -> "15s", "save" -> "2m")
     val registry         = MongoStepMeterRegistry(collectionName, configurationMap)
     // #endregion registry-with-overridden-config
-    val dao   = MongoTestServer.provider.dao(collectionName)
+    val dao = MongoTestServer.provider.dao(collectionName)
     dao.drop().result()
     new JvmGcMetrics().bindTo(registry)
     new JvmMemoryMetrics().bindTo(registry)

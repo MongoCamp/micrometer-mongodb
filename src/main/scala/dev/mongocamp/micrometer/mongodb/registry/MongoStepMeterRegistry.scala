@@ -1,16 +1,16 @@
 package dev.mongocamp.micrometer.mongodb.registry
 
 import dev.mongocamp.driver.mongodb._
-import dev.mongocamp.driver.mongodb.database.{ DatabaseProvider, MongoConfig }
+import dev.mongocamp.driver.mongodb.database.DatabaseProvider
+import dev.mongocamp.driver.mongodb.database.MongoConfig
 import dev.mongocamp.micrometer.mongodb.registry.MongoStepMeterRegistry.threadFactory
 import io.micrometer.common.util.StringUtils
 import io.micrometer.core.instrument._
 import io.micrometer.core.instrument.step.StepMeterRegistry
 import io.micrometer.core.instrument.util.NamedThreadFactory
-import org.mongodb.scala.Document
-
-import java.util.Date
 import java.util.concurrent.TimeUnit
+import java.util.Date
+import org.mongodb.scala.Document
 import scala.collection.mutable
 import scala.concurrent.duration.Duration
 import scala.jdk.CollectionConverters._
@@ -23,7 +23,9 @@ class MongoStepMeterRegistry(config: MongoRegistryConfig, threadFactory: NamedTh
   override def publish(): Unit = {
     val saveWait = Duration(config.get(s"${config.prefix()}.save"))
     val metrics: Map[String, Any] = getMeters.asScala
-      .map(meter => getConventionName(meter.getId) -> convertMeterToMap(meter))
+      .map(
+        meter => getConventionName(meter.getId) -> convertMeterToMap(meter)
+      )
       .toMap
       .filter(_._2.nonEmpty) ++ Map("date" -> new Date())
     if (metrics.size > 1) {
@@ -46,7 +48,12 @@ class MongoStepMeterRegistry(config: MongoRegistryConfig, threadFactory: NamedTh
     val keyDuration    = "duration"
     val id             = meter.getId
     val defaultFields =
-      Map(KeyMetricType -> id.getType.name().toLowerCase(), KeyTags -> getConventionTags(id).asScala.filter(t => StringUtils.isNotBlank(t.getValue)))
+      Map(
+        KeyMetricType -> id.getType.name().toLowerCase(),
+        KeyTags -> getConventionTags(id).asScala.filter(
+          t => StringUtils.isNotBlank(t.getValue)
+        )
+      )
     meter match {
       case g: Gauge =>
         if (java.lang.Double.isFinite(g.value())) {
@@ -92,12 +99,14 @@ class MongoStepMeterRegistry(config: MongoRegistryConfig, threadFactory: NamedTh
         val fields = mutable.Map[String, Any]()
         m.measure()
           .asScala
-          .foreach(measure => {
-            if (java.lang.Double.isFinite(measure.getValue)) {
-              val key = measure.getStatistic.getTagValueRepresentation.replaceAll("(.)(\\p{Upper})", "$1_$2").toLowerCase
-              fields.update(key, measure.getValue)
+          .foreach(
+            measure => {
+              if (java.lang.Double.isFinite(measure.getValue)) {
+                val key = measure.getStatistic.getTagValueRepresentation.replaceAll("(.)(\\p{Upper})", "$1_$2").toLowerCase
+                fields.update(key, measure.getValue)
+              }
             }
-          })
+          )
         defaultFields
       case _ => Map()
     }
@@ -115,9 +124,9 @@ object MongoStepMeterRegistry {
   }
 
   def apply(
-      collectionName: String,
-      configPath: String = MongoConfig.DefaultConfigPathPrefix,
-      configurationMap: Map[String, String] = Map()
+    collectionName: String,
+    configPath: String = MongoConfig.DefaultConfigPathPrefix,
+    configurationMap: Map[String, String] = Map()
   ): MongoStepMeterRegistry = {
     val provider = providerCache.getOrElse(configPath, DatabaseProvider.fromPath(configPath))
     providerCache.put(configPath, provider)

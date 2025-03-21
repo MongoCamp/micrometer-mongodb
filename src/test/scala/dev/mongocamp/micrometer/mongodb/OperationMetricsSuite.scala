@@ -1,9 +1,8 @@
 package dev.mongocamp.micrometer.mongodb
 
 import dev.mongocamp.micrometer.mongodb.binder.OperationMetrics
-import io.micrometer.core.instrument.Meter
 import io.micrometer.core.instrument.simple.SimpleMeterRegistry
-
+import io.micrometer.core.instrument.Meter
 import scala.jdk.CollectionConverters._
 
 class OperationMetricsSuite extends BaseSuite {

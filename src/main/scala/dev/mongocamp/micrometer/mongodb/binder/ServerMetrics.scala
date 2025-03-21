@@ -1,11 +1,11 @@
 package dev.mongocamp.micrometer.mongodb.binder
 
 import dev.mongocamp.driver.mongodb._
-import dev.mongocamp.driver.mongodb.database.{ DatabaseProvider, MongoConfig }
+import dev.mongocamp.driver.mongodb.database.DatabaseProvider
+import dev.mongocamp.driver.mongodb.database.MongoConfig
 import io.micrometer.core.instrument._
 import io.micrometer.core.instrument.binder.BaseUnits
 import org.mongodb.scala.MongoDatabase
-
 import scala.jdk.CollectionConverters.IterableHasAsJava
 
 case class ServerMetrics(mongoDatabase: MongoDatabase, tags: List[Tag] = List.empty) extends ServerMetricsBase {
