@@ -40,7 +40,7 @@ developers := List(
 
 licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0.html"))
 
-crossScalaVersions := Seq("3.6.0", "2.13.16")
+crossScalaVersions := Seq("3.6.4", "2.13.16")
 
 scalaVersion := crossScalaVersions.value.head
 
@@ -61,7 +61,7 @@ resolvers += "Sonatype OSS Snapshots".at("https://oss.sonatype.org/content/repos
 
 libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.5.18"
 
-libraryDependencies += "dev.mongocamp" %% "mongodb-driver" % "3.0.0"
+libraryDependencies += "dev.mongocamp" %% "mongodb-driver" % "3.0.2"
 
 libraryDependencies += "io.micrometer" % "micrometer-core" % "1.14.5"
 
