@@ -1,3 +1,8 @@
+## [v1.0.3] - 2025-03-30
+### :wrench: Chores
+- [`ce50b1e`](https://github.com/MongoCamp/micrometer-mongodb/commit/ce50b1e12e3cd1984ccb690e7cbdfa17a9eab438) - 1 dependency update for micrometer-mongodb *(commit by [@QuadStingray](https://github.com/QuadStingray))*
+
+
 ## [v1.0.2] - 2025-03-21
 ### :sparkles: New Features
 - [`d27a659`](https://github.com/MongoCamp/micrometer-mongodb/commit/d27a659f90e61da37e6b14786b5ebbf115871114) - scala 3 version *(commit by [@QuadStingray](https://github.com/QuadStingray))*
@@ -66,3 +71,4 @@
 [v1.0.0]: https://github.com/MongoCamp/micrometer-mongodb/compare/v0.7.1...v1.0.0
 [v1.0.1]: https://github.com/MongoCamp/micrometer-mongodb/compare/v1.0.0...v1.0.1
 [v1.0.2]: https://github.com/MongoCamp/micrometer-mongodb/compare/v1.0.1...v1.0.2
+[v1.0.3]: https://github.com/MongoCamp/micrometer-mongodb/compare/v1.0.2...v1.0.3
