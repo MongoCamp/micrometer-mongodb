@@ -22,9 +22,9 @@ object MongoTestServer extends LazyLogging {
   lazy val providerMetrics: DatabaseProvider = DatabaseProvider.fromPath("unit.test.mongo.metrics")
 
   private var running: Boolean                                                             = false
-  private lazy val backend: SttpBackend[Future, PekkoStreams with capabilities.WebSockets] = PekkoHttpBackend()
+  private lazy val backend = PekkoHttpBackend()
 
-  private lazy val containerConfiguration: GenericContainer[_] = {
+  private lazy val containerConfiguration = {
     val mongoDbContainer = new GenericContainer(s"mongocamp/mongodb:latest")
     mongoDbContainer.withExposedPorts(27017)
     mongoDbContainer.waitingFor(Wait.forLogMessage("(.*?)child process started successfully, parent exiting(.*?)", 2).withStartupTimeout(60.seconds.toJava))

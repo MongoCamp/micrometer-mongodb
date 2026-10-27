@@ -108,7 +108,7 @@ class MongoStepMeterRegistry(config: MongoRegistryConfig, threadFactory: NamedTh
             }
           )
         defaultFields
-      case _ => Map()
+      case null => Map()
     }
   }
 }

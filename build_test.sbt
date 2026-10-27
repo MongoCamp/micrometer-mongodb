@@ -4,7 +4,12 @@ Test / parallelExecution := false
 
 IntegrationTest / parallelExecution := false
 
-Test / scalacOptions ++= Seq("-Yrangepos")
+Test / scalacOptions ++= {
+  CrossVersion.partialVersion(scalaVersion.value) match {
+    case Some((2, _)) => Seq("-Yrangepos")
+    case _            => Seq.empty
+  }
+}
 
 // Test
 libraryDependencies += "org.scalameta" %% "munit" % "1.1.0" % Test

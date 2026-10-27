@@ -44,7 +44,7 @@ crossScalaVersions := Seq("3.9.0", "2.13.16")
 
 scalaVersion := crossScalaVersions.value.head
 
-scalacOptions += "-deprecation"
+scalacOptions ++= Seq("-deprecation", "-feature")
 
 Test / parallelExecution := false
 
