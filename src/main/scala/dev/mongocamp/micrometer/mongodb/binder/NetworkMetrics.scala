@@ -13,14 +13,14 @@ case class NetworkMetrics(mongoDatabase: MongoDatabase, tags: List[Tag] = List.e
 
   override def bindTo(registry: MeterRegistry): Unit = {
     Gauge
-      .builder(s"$namePrefix.bytesIn", () => getServerStats.getDoubleValue("network.bytesIn"))
+      .builder(s"$namePrefix.bytesIn", () => Double.box(getServerStats.getDoubleValue("network.bytesIn")))
       .tags(tags.asJava)
       .description("The total number of bytes that the server has received over network.")
       .baseUnit(BaseUnits.BYTES)
       .register(registry)
 
     Gauge
-      .builder(s"$namePrefix.bytesOut", () => getServerStats.getDoubleValue("network.bytesOut"))
+      .builder(s"$namePrefix.bytesOut", () => Double.box(getServerStats.getDoubleValue("network.bytesOut")))
       .tags(tags.asJava)
       .description("The total number of bytes that the server has sent over network.")
       .baseUnit(BaseUnits.BYTES)

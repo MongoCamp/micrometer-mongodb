@@ -14,35 +14,35 @@ case class ConnectionsMetrics(mongoDatabase: MongoDatabase, tags: List[Tag] = Li
   override def bindTo(registry: MeterRegistry): Unit = {
 
     Gauge
-      .builder(s"$namePrefix.current", () => getServerStats.getDoubleValue("connections.current"))
+      .builder(s"$namePrefix.current", () => Double.box(getServerStats.getDoubleValue("connections.current")))
       .tags(tags.asJava)
       .description("The number of incoming connections from clients to the database server.")
       .baseUnit(BaseUnits.CONNECTIONS)
       .register(registry)
 
     Gauge
-      .builder(s"$namePrefix.available", () => getServerStats.getDoubleValue("connections.available"))
+      .builder(s"$namePrefix.available", () => Double.box(getServerStats.getDoubleValue("connections.available")))
       .tags(tags.asJava)
       .description("The number of unused incoming connections available.")
       .baseUnit(BaseUnits.CONNECTIONS)
       .register(registry)
 
     Gauge
-      .builder(s"$namePrefix.totalCreated", () => getServerStats.getDoubleValue("connections.totalCreated"))
+      .builder(s"$namePrefix.totalCreated", () => Double.box(getServerStats.getDoubleValue("connections.totalCreated")))
       .tags(tags.asJava)
       .description("Count of all incoming connections created to the server. This number includes connections that have since closed.")
       .baseUnit(BaseUnits.CONNECTIONS)
       .register(registry)
 
     Gauge
-      .builder(s"$namePrefix.active", () => getServerStats.getDoubleValue("connections.active"))
+      .builder(s"$namePrefix.active", () => Double.box(getServerStats.getDoubleValue("connections.active")))
       .tags(tags.asJava)
       .description("The number of active client connections to the server.")
       .baseUnit(BaseUnits.CONNECTIONS)
       .register(registry)
 
     Gauge
-      .builder(s"$namePrefix.threaded", () => getServerStats.getDoubleValue("connections.threaded"))
+      .builder(s"$namePrefix.threaded", () => Double.box(getServerStats.getDoubleValue("connections.threaded")))
       .tags(tags.asJava)
       .description("The number of incoming connections from clients that are assigned to threads.")
       .baseUnit(BaseUnits.CONNECTIONS)
