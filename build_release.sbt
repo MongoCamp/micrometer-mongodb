@@ -54,7 +54,7 @@ releaseProcess := {
     commitReleaseVersion,
     tagRelease,
     releaseStepCommandAndRemaining("+publishSigned"),
-    releaseStepCommand("sonatypeBundleRelease"),
+// TODO phase 6:     releaseStepCommand("sonatypeBundleRelease"),
     releaseStepCommand("ci-deploy-docs"),
     setToMyNextVersion,
     releaseStepCommand("scalafmtAll"),
@@ -67,14 +67,14 @@ releaseProcess := {
 // add sonatype repository settings
 // snapshot versions publish to sonatype snapshot repository
 // other versions publish to sonatype staging repository
-publishTo := sonatypePublishToBundle.value
+// TODO phase 6: publishTo := sonatypePublishToBundle.value
 
-credentials += Credentials("Sonatype Nexus Repository Manager", "oss.sonatype.org", System.getenv("SONATYPE_USER"), System.getenv("SONATYPE_PASSWORD"))
-credentials += Credentials("New Sonatype Nexus Repository Manager", "s01.oss.sonatype.org", System.getenv("SONATYPE_USER"), System.getenv("SONATYPE_PASSWORD"))
+// TODO phase 6: credentials += Credentials("Sonatype Nexus Repository Manager", "oss.sonatype.org", System.getenv("SONATYPE_USER"), System.getenv("SONATYPE_PASSWORD"))
+// TODO phase 6: credentials += Credentials("New Sonatype Nexus Repository Manager", "s01.oss.sonatype.org", System.getenv("SONATYPE_USER"), System.getenv("SONATYPE_PASSWORD"))
 
 Global / useGpgPinentry := true
 
-ThisBuild / sonatypeCredentialHost := "s01.oss.sonatype.org"
+// TODO phase 6: ThisBuild / sonatypeCredentialHost := "s01.oss.sonatype.org"
 
 packageOptions += {
   Package.ManifestAttributes(

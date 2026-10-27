@@ -1,8 +1,4 @@
-Defaults.itSettings
-
 Test / parallelExecution := false
-
-IntegrationTest / parallelExecution := false
 
 Test / scalacOptions ++= {
   CrossVersion.partialVersion(scalaVersion.value) match {
