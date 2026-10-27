@@ -54,7 +54,7 @@ releaseProcess := {
     commitReleaseVersion,
     tagRelease,
     releaseStepCommandAndRemaining("+publishSigned"),
-// TODO phase 6:     releaseStepCommand("sonatypeBundleRelease"),
+    releaseStepCommand("sonaRelease"),
     releaseStepCommand("ci-deploy-docs"),
     setToMyNextVersion,
     releaseStepCommand("scalafmtAll"),
@@ -64,17 +64,17 @@ releaseProcess := {
   )
 }
 
-// add sonatype repository settings
-// snapshot versions publish to sonatype snapshot repository
-// other versions publish to sonatype staging repository
-// TODO phase 6: publishTo := sonatypePublishToBundle.value
-
-// TODO phase 6: credentials += Credentials("Sonatype Nexus Repository Manager", "oss.sonatype.org", System.getenv("SONATYPE_USER"), System.getenv("SONATYPE_PASSWORD"))
-// TODO phase 6: credentials += Credentials("New Sonatype Nexus Repository Manager", "s01.oss.sonatype.org", System.getenv("SONATYPE_USER"), System.getenv("SONATYPE_PASSWORD"))
+// publish to the Sonatype Central Portal
+// snapshot versions publish to the central snapshots repository
+// other versions are staged locally and uploaded as a bundle by sonaRelease
+// credentials are read from SONATYPE_USERNAME and SONATYPE_PASSWORD (Central Portal user token)
+publishTo := {
+  val centralSnapshots = "https://central.sonatype.com/repository/maven-snapshots/"
+  if (version.value.endsWith("-SNAPSHOT")) Some("central-snapshots".at(centralSnapshots))
+  else localStaging.value
+}
 
 Global / useGpgPinentry := true
-
-// TODO phase 6: ThisBuild / sonatypeCredentialHost := "s01.oss.sonatype.org"
 
 packageOptions += {
   Package.ManifestAttributes(
