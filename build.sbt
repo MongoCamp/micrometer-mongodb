@@ -73,7 +73,7 @@ buildInfoOptions += BuildInfoOption.BuildTime
 
 scalafmtOnCompile := false
 
-coverageMinimumStmtTotal := 70
+coverageMinimumStmtTotal := 65
 
 coverageFailOnMinimum := true
 

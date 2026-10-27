@@ -21,8 +21,8 @@ object MongoTestServer extends LazyLogging {
   lazy val provider: DatabaseProvider        = DatabaseProvider.fromPath("unit.test.mongo")
   lazy val providerMetrics: DatabaseProvider = DatabaseProvider.fromPath("unit.test.mongo.metrics")
 
-  private var running: Boolean                                                             = false
-  private lazy val backend = PekkoHttpBackend()
+  private var running: Boolean = false
+  private lazy val backend     = PekkoHttpBackend()
 
   private lazy val containerConfiguration = {
     val mongoDbContainer = new GenericContainer(s"mongocamp/mongodb:latest")
