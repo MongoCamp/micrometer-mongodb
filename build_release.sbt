@@ -30,14 +30,14 @@ def setMyVersion(version: String, state: State): Unit = {
   json.write()
 }
 
-releaseNextCommitMessage := s"ci: update version after release"
+releaseNextCommitMessage := s"ci: update version after release [skip ci]"
 releaseCommitMessage     := s"ci: prepare release of version ${runtimeVersion.value}"
 
 commands += Command.command("ci-release")(
   (state: State) => {
     val semVersion = new Semver(version.value)
     if (semVersion.isStable) {
-      Command.process("release with-defaults", state)
+      Command.process("release with-defaults", state, _ => ())
     }
     else {
       state
@@ -64,17 +64,15 @@ releaseProcess := {
   )
 }
 
-// publish to the Sonatype Central Portal
-// snapshot versions publish to the central snapshots repository
-// other versions are staged locally and uploaded as a bundle by sonaRelease
-// credentials are read from SONATYPE_USERNAME and SONATYPE_PASSWORD (Central Portal user token)
-publishTo := {
+Global / useGpgPinentry := true
+
+ThisBuild / publishTo := {
   val centralSnapshots = "https://central.sonatype.com/repository/maven-snapshots/"
-  if (version.value.endsWith("-SNAPSHOT")) Some("central-snapshots".at(centralSnapshots))
+  if (isSnapshot.value) Some("central-snapshots".at(centralSnapshots))
   else localStaging.value
 }
 
-Global / useGpgPinentry := true
+credentials += Credentials("central.sonatype.com", "central.sonatype.com", System.getenv("SONATYPE_USER"), System.getenv("SONATYPE_PASSWORD"))
 
 packageOptions += {
   Package.ManifestAttributes(
