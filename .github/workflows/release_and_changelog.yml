@@ -43,13 +43,13 @@ jobs:
       - name: Set up JDK
         uses: coursier/setup-action@main
         with:
-          jvm: corretto:17
+          jvm: corretto:21
           apps: sbt scala scalac
 
       - name: Install pnpm
         uses: pnpm/action-setup@master
         with:
-          version: 6.0.2
+          version: 10
 
       - name: Build and deploy Docu
         env:

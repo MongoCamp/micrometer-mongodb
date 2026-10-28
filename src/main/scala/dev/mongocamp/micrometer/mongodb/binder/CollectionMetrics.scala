@@ -18,28 +18,28 @@ case class CollectionMetrics(mongoDatabase: MongoDatabase, collectionName: Strin
 
   override def bindTo(registry: MeterRegistry): Unit = {
     Gauge
-      .builder(s"$namePrefix.size", () => getCollectionStats.getDoubleValue("size"))
+      .builder(s"$namePrefix.size", () => Double.box(getCollectionStats.getDoubleValue("size")))
       .tags(tags.asJava)
       .description(s"The total size of all documents for the collection ${collectionName}.")
       .baseUnit(BaseUnits.BYTES)
       .register(registry)
 
     Gauge
-      .builder(s"$namePrefix.totalIndexSize", () => getCollectionStats.getDoubleValue("totalIndexSize"))
+      .builder(s"$namePrefix.totalIndexSize", () => Double.box(getCollectionStats.getDoubleValue("totalIndexSize")))
       .tags(tags.asJava)
       .description(s"The total size of all indexes for the collection ${collectionName}.")
       .baseUnit(BaseUnits.BYTES)
       .register(registry)
 
     Gauge
-      .builder(s"$namePrefix.avgObjSize", () => getCollectionStats.getDoubleValue("avgObjSize"))
+      .builder(s"$namePrefix.avgObjSize", () => Double.box(getCollectionStats.getDoubleValue("avgObjSize")))
       .tags(tags.asJava)
       .description(s"The avg size of documents for the collection ${collectionName}.")
       .baseUnit(BaseUnits.BYTES)
       .register(registry)
 
     Gauge
-      .builder(s"$namePrefix.count", () => getCollectionStats.getDoubleValue("count"))
+      .builder(s"$namePrefix.count", () => Double.box(getCollectionStats.getDoubleValue("count")))
       .tags(tags.asJava)
       .description(s"The total number of documents in the collection ${collectionName} to the return document.")
       .baseUnit(BaseUnits.OBJECTS)

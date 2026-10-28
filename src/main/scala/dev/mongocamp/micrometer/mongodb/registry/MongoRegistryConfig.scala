@@ -25,10 +25,7 @@ case class MongoRegistryConfig(mongoDAO: MongoDAO[Document], configurationMap: M
   private def loadConfigValue(key: String): Option[String] = {
     try {
       val mapKey = key.replace(s"$prefix.", "")
-      (configurationMap.get(mapKey) ++ configurationMap.get(key)).foreach(
-        v => return Some(v)
-      )
-      Option(conf.getValue(key).render().replace("\"", ""))
+      (configurationMap.get(mapKey) ++ configurationMap.get(key)).headOption.orElse(Option(conf.getValue(key).render().replace("\"", "")))
     }
     catch {
       case _: Exception =>

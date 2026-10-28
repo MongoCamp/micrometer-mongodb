@@ -3,7 +3,7 @@
 A library to monitor your MongoDB and push all your [Micrometer](https://micrometer.io/) Stats to an Mongodb.
 
 ## Dependency Setup
-Support Scala 2.12 and Scala 2.13.
+Artifacts are published for Scala 3 (`_3`) and Scala 2.13 (`_2.13`). The Maven and Gradle examples use the Scala 3 artifact.
 <DependencyGroup/>
 
 ## Binder

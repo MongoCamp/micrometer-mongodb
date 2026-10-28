@@ -14,7 +14,7 @@ case class ServerMetrics(mongoDatabase: MongoDatabase, tags: List[Tag] = List.em
   override def bindTo(registry: MeterRegistry): Unit = {
 
     Gauge
-      .builder(s"$namePrefix.uptime", () => getServerStats.getDoubleValue("uptimeMillis"))
+      .builder(s"$namePrefix.uptime", () => Double.box(getServerStats.getDoubleValue("uptimeMillis")))
       .tags(tags.asJava)
       .description("The uptime of your Server in Seconds")
       .baseUnit(BaseUnits.MILLISECONDS)

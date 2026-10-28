@@ -1,7 +1,5 @@
-import Unocss from 'unocss/vite'
 import {defineConfig} from 'vitepress'
 import {version} from '../../package.json'
-import {SearchPlugin} from 'vitepress-plugin-search'
 
 export default defineConfig({
     lang: 'en-US',
@@ -14,6 +12,10 @@ export default defineConfig({
         logo: '/logo_without_text.png',
 
         nav: nav(),
+
+        search: {
+            provider: 'local'
+        },
 
         sidebar: {
             '/documentation/': sidebarDocumentation()
@@ -35,14 +37,6 @@ export default defineConfig({
             copyright: 'Copyright © 2023 - MongoCamp Team'
         },
 
-    },
-    vite: {
-        plugins: [
-            Unocss({
-                configFile: '../../unocss.config.ts',
-            }),
-            SearchPlugin(),
-        ],
     },
 
 })
