@@ -1,24 +1,24 @@
 {
-  "name": "micrometer-mongodb",
-  "organization": "dev.mongocamp",
-  "version": "1.1.0",
-  "author": "info@mongocamp.dev",
-  "license": "Apache-2.0",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/MongoCamp/micrometer-mongodb.git"
+  "name" : "micrometer-mongodb",
+  "organization" : "dev.mongocamp",
+  "version" : "1.1.1.snapshot",
+  "author" : "info@mongocamp.dev",
+  "license" : "Apache-2.0",
+  "repository" : {
+    "type" : "git",
+    "url" : "git+https://github.com/MongoCamp/micrometer-mongodb.git"
   },
-  "bugs": {
-    "url": "https://github.com/MongoCamp/micrometer-mongodb/issues"
+  "bugs" : {
+    "url" : "https://github.com/MongoCamp/micrometer-mongodb/issues"
   },
-  "homepage": "https://micrometer-mongodb.mongocamp.dev/",
-  "scripts": {
-    "docs:serve": "vitepress serve docs --port 5555",
-    "docs:build": "pnpm docs:external; vitepress build docs",
-    "docs:external": "sh docs/external/fileloader.sh",
-    "docs:dev": "pnpm docs:external; vitepress dev docs"
+  "homepage" : "https://micrometer-mongodb.mongocamp.dev/",
+  "scripts" : {
+    "docs:serve" : "vitepress serve docs --port 5555",
+    "docs:build" : "pnpm docs:external; vitepress build docs",
+    "docs:external" : "sh docs/external/fileloader.sh",
+    "docs:dev" : "pnpm docs:external; vitepress dev docs"
   },
-  "devDependencies": {
-    "vitepress": "2.0.0-alpha.21"
+  "devDependencies" : {
+    "vitepress" : "2.0.0-alpha.21"
   }
 }
