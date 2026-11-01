@@ -1,3 +1,11 @@
+## [v1.1.0] - 2026-11-01
+### :bug: Bug Fixes
+- [`ca1a12e`](https://github.com/MongoCamp/micrometer-mongodb/commit/ca1a12e528a8b8f5e105688a941fa24edb263adc) - remove scala 3 deprecation warnings *(commit by [@sfxcode](https://github.com/sfxcode))*
+
+### :white_check_mark: Tests
+- [`6ba1d12`](https://github.com/MongoCamp/micrometer-mongodb/commit/6ba1d121b661c36588d01df39ec83c5d39d28192) - extend testing to java 25 and mongodb 9 *(commit by [@QuadStingray](https://github.com/QuadStingray))*
+
+
 ## [v1.0.3] - 2025-03-30
 ### :wrench: Chores
 - [`ce50b1e`](https://github.com/MongoCamp/micrometer-mongodb/commit/ce50b1e12e3cd1984ccb690e7cbdfa17a9eab438) - 1 dependency update for micrometer-mongodb *(commit by [@QuadStingray](https://github.com/QuadStingray))*
@@ -72,3 +80,4 @@
 [v1.0.1]: https://github.com/MongoCamp/micrometer-mongodb/compare/v1.0.0...v1.0.1
 [v1.0.2]: https://github.com/MongoCamp/micrometer-mongodb/compare/v1.0.1...v1.0.2
 [v1.0.3]: https://github.com/MongoCamp/micrometer-mongodb/compare/v1.0.2...v1.0.3
+[v1.1.0]: https://github.com/MongoCamp/micrometer-mongodb/compare/v1.0.3...v1.1.0
